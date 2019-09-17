@@ -1,0 +1,18 @@
+---
+- hosts: webserver
+  remote_user: root
+  tasks:
+    - name: ensure nginx is updated
+      apt:
+        name: nginx
+        state: latest
+    - name: write nginx config file
+      template:
+        src: /somewhere/file
+        dest: /somewhere-else/file
+      notify:
+        - restart nginx
+    - name: ensure nginx is running
+      service:
+        name: nginx
+        state: started
