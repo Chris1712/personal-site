@@ -1,10 +1,14 @@
 ---
 - hosts: webserver
   remote_user: root
+  vars:
+    packages:
+    - nginx
+    - git
   tasks:
-    - name: ensure nginx is updated
+    - name: ensure required packages is updated
       apt:
-        name: nginx
+        name: "{{ packages }}"
         state: latest
 #    - name: write nginx config file
 #      template:
@@ -16,3 +20,7 @@
       service:
         name: nginx
         state: started
+    - name: check out updated source
+      git:
+        repo: 'https://github.com/Chris1712/personal-site.git'
+        dest: /var/www/
