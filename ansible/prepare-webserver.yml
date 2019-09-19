@@ -6,12 +6,12 @@
       apt:
         name: nginx
         state: latest
-    - name: write nginx config file
-      template:
-        src: /somewhere/file
-        dest: /somewhere-else/file
-      notify:
-        - restart nginx
+#    - name: write nginx config file
+#      template:
+#        src: /somewhere/file
+#        dest: /somewhere-else/file
+#      notify:
+#        - restart nginx
     - name: ensure nginx is running
       service:
         name: nginx
