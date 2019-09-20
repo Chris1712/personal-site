@@ -5,22 +5,18 @@
     packages:
     - nginx
     - git
+    - certbot
+    - python-certbot-nginx
   tasks:
-    - name: ensure required packages is updated
+    - name: ensure required packages are updated
       apt:
         name: "{{ packages }}"
         state: latest
-#    - name: write nginx config file
-#      template:
-#        src: /somewhere/file
-#        dest: /somewhere-else/file
-#      notify:
-#        - restart nginx
     - name: ensure nginx is running
       service:
         name: nginx
         state: started
     - name: check out updated source
-      git:
+      git: # note that by default nginx hosts /var/www/html
         repo: 'https://github.com/Chris1712/personal-site.git'
         dest: /var/www/
