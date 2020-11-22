@@ -1,2 +1,2 @@
 [webserver]
-scw-webserver ansible_host=51.158.162.228 ansible_port=725 ansible_user=root
+ovh-webserver ansible_host=51.195.203.73 ansible_port=725 ansible_user=chris
