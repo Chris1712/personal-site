@@ -8,6 +8,7 @@
     - git
     - certbot
     - python-certbot-nginx
+    - man
   tasks:
     - name: ensure required packages are updated
       apt:
