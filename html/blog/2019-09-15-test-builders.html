@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon-96x96.png">
+    <title>The Test Builder Pattern &mdash; Christopher Turner</title>
+</head>
+<body>
+<div class="container">
+    <p class="site-nav"><a href="./">&larr; Blog</a></p>
+
+    <article>
+        <h1>The Test Builder Pattern</h1>
+        <p class="post-meta">2019-09-15 &middot; Chris</p>
+
+        <p>Today I'm going to write about a design pattern I've been using heavily in unit testing, both in java and javascript: a test builder class.</p>
+
+        <p>This pattern helps make your test classes much more tidy and readable by centralising the logic for mocking and other setup, while keeping it flexible enough that it can be used consistently for all your tests.</p>
+
+        <p>A very simple example in Java with junit 5 and Mockito:</p>
+
+<pre><code>class FooTest {
+
+    @Test
+    @DisplayName("Should format a count of 2 correctly")
+    void countOfTwo() {
+        // Arrange
+        Foo target = new FooTestBuilder().setBarCount(2).build();
+
+        // Act
+        String result = target.howMany();
+
+        // Assert
+        assertEquals("There are 2.", result);
+    }
+
+}
+
+class FooTestBuilder {
+
+    BarService mockBarService = Mockito.mock(BarService.class);
+
+    public FooTestBuilder setBarCount(Integer count) {
+        Mockito.when(mockBarService.count()).thenReturn(count);
+        return this;
+    }
+
+    public Foo build() {
+        return new Foo(mockBarService);
+    }
+
+}
+</code></pre>
+
+        <p>Here our class under test is Foo, which relies on the BarService, provided to the class by dependency injection in the constructor. Since many of our tests will require mocking the dependencies of Foo, we can use the builder to abstract away the details from the individual tests.</p>
+
+        <p>Obviously this example is simple and the mocking here can easily be done as part of the test, but in more realistic scenarios where your class under test will have more dependencies, each with more methods, the flexibility of this setup is very valuable.</p>
+
+        <p>You can also provide setter methods, in addition, with a simple method like:</p>
+
+<pre><code>    public FooTestBuilder setBarService(BarService barService) {
+        this.mockBarService = barService;
+        return this;
+    }
+</code></pre>
+
+        <p>In this way you can still have your mock configured by the builder, but you can provide the reference yourself in your test, to enable verification of the called methods. This becomes valuable especially when your dependencies aren't particularly easy to mock, with static methods or objects that aren't injected (in Java I'd use PowerMock methods like mockStatic() and whenNew() to overcome these issues).</p>
+
+        <p>Additionally, this pattern (like builders in general) is very extensible - when there's a new dependency for Foo, adding it to the builder once will fix all our tests.</p>
+
+        <p>It's also very valuable for making tests easy to maintain as you refactor your classes, by abstracting the dependency structure of your class away from individual tests.</p>
+
+        <p>In the last few months I've found myself using this pattern for unit testing of almost all complex classes - and for abstracting away messy setup like <a href="https://angular.io/api/core/testing/TestBed">Angular TestBed</a> and <a href="https://github.com/powermock/powermock">Powermock</a>, I've found it works extremely well.</p>
+    </article>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon-96x96.png">
+    <title>Setting up Jekyll for GitHub Pages &mdash; Christopher Turner</title>
+</head>
+<body>
+<div class="container">
+    <p class="site-nav"><a href="./">&larr; Blog</a></p>
+
+    <article>
+        <h1>Setting up Jekyll for GitHub Pages</h1>
+        <p class="post-meta">2019-08-24 &middot; Chris</p>
+
+        <p>As a start to this blog I thought I'd write a little about the minimal trouble I had getting it up and running. I'd not used jekyll or anything similar before so I had a few problems to work through, but all things considered it's a nice and straightforward system. However, some of the small issues I found may have solutions relevant to others, so I've written a little more below.</p>
+
+        <h2>Initial setup of a simple GitHub Pages user site with a theme</h2>
+
+        <p>To do this simply create a repo named "username.GitHub.io", including an <strong>index.md</strong> file. Then in the repo settings under the "GitHub Pages" section you can use the Theme Chooser to pick out a theme with styling you like. Once that's done, back on the settings page there should be a success message, like so:</p>
+
+        <p><img src="img/github-pages-published.png" alt="a successful publish"></p>
+
+        <p>Navigating to the url will show the contents of your <strong>index.md</strong>, rendered according to the theme you've picked. Note that in my case there was a delay of up to a minute between pushing my changes to GitHub and them showing up.</p>
+
+        <h2>Adding blog posts to your GitHub Pages</h2>
+
+        <p>Having created (the <a href="https://pages-themes.github.io/minimal/">minimal theme</a> took my fancy), the <a href="https://jekyllrb.com/docs/posts/">Jekyll documentation</a> suggests you create a <strong>_posts folder</strong>, underneath which you can place markdown posts named in the format <strong>YYYY-MM-DD-post-title.md</strong>.</p>
+
+        <h2>Adding links to your posts to the front page</h2>
+
+        <p>Having done this and pushed your changes to the repo, you may find no links appear on your homepage.</p>
+
+        <p>This is because most of the themes don't have their homepages configured to include links to the posts. To fix this you can override the template provided as part of the theme - find the <strong>_layouts/default.html</strong> file in the theme's repo and copy it into your pages repo, in the same location. Then add, in the desired area, this block of code:</p>
+
+<pre><code>&lt;h2&gt;Posts&lt;/h2&gt;
+
+&lt;ul&gt;
+  {% for post in site.posts %}
+    &lt;li&gt;
+      &lt;a href="{{ post.url }}"&gt;{{ post.date | date: "%Y-%m-%d" }} - {{ post.title }}&lt;/a&gt;
+    &lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+&lt;/section&gt;
+</code></pre>
+
+        <p>With that done your site should include links to your posts.</p>
+    </article>
+</div>
+</body>
+</html>

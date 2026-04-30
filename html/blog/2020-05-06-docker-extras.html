@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon-96x96.png">
+    <title>Docker extras &mdash; Christopher Turner</title>
+</head>
+<body>
+<div class="container">
+    <p class="site-nav"><a href="./">&larr; Blog</a></p>
+
+    <article>
+        <h1>Docker extras</h1>
+        <p class="post-meta">2020-05-06 &middot; Chris</p>
+
+        <p>There are of course plenty of guides on starting with docker, and the basics are very easy to pick up and get going with. So instead of retreading the basics, I'm going to list a few small features of docker I didn't come across until later in my use, but which are interesting and/or useful:</p>
+
+        <h3><code>docker commit</code></h3>
+
+        <p><a href="https://docs.docker.com/engine/reference/commandline/commit/">Link to the official documentation</a></p>
+
+        <p>As per the <a href="https://docs.docker.com/storage/storagedriver/">storage driver documentation</a>, a container's filesystem is effectively another writeable layer on top of the read only image layers. The 'docker commit' command creates an image from the current state of the container, very useful for testing purposes and quick sharing.</p>
+
+        <h3><code>--network="host"</code></h3>
+
+        <p><a href="https://docs.docker.com/engine/reference/run/#network-settings">Link to the official documentation</a></p>
+
+        <p>It's possible to run a container configured to use your host network interface directly - that is, with no explicit port forwarding required, as if you were running the process natively. Again this is useful for testing purposes, but the documentation also suggests this mode for containers where very high network performance is important - removing the virtualisation layer improves performance significantly.</p>
+
+        <p>There's a similar option for <code>--network="none"</code> which removes all networking, helpful in cases where isolating a container is required.</p>
+
+        <h3><code>FROM scratch</code></h3>
+
+        <p><a href="https://docs.docker.com/develop/develop-images/baseimages/#create-a-simple-parent-image-using-scratch">Link to the official documentation</a></p>
+
+        <p>Generally we build our images from other images provided by docker or the community, but of course it must be possible to start from scratch, right? If you wish to do so, 'scratch' is the minimal docker image top which all others are ultimately based.</p>
+    </article>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon-96x96.png">
+    <title>OpenAPI mocking with prism &mdash; Christopher Turner</title>
+</head>
+<body>
+<div class="container">
+    <p class="site-nav"><a href="./">&larr; Blog</a></p>
+
+    <article>
+        <h1>OpenAPI mocking with prism</h1>
+        <p class="post-meta">2019-10-06 &middot; Chris</p>
+
+        <p>When doing full-stack development as part of a team, adding a new feature often happens in the order:</p>
+
+        <ol>
+            <li>Modify infrastructure (relational database, elastic etc.) to store whatever's required for the new feature</li>
+            <li>Add business layer (e.g. REST API) functionality</li>
+            <li>Update front-end to present the new feature to users.</li>
+        </ol>
+
+        <p>In general doing steps 2 and 3 will rely on having a version of the previous step available to work on, and this can slow things down - but there are some powerful tools to help break these <a href="https://en.wikipedia.org/wiki/Dependency_%28project_management%29">schedule dependencies</a>.</p>
+
+        <p>The example I have today is a tool called <a href="https://stoplight.io/open-source/prism/">prism</a>, which breaks the dependency between steps 2 and 3 when you're using an OpenAPI specification to define your API. Once you've got your endpoints agreed and specified, prism can take your spec file and spin up a server that'll give realistic answers to your requests, which should be enough to let you get going on your front end development straight away.</p>
+
+        <p>First, install prism:</p>
+
+        <p><code>npm install -g @stoplight/prism-cli</code></p>
+
+        <p>Then, it's as simple as pointing prism at your spec file, here as an example I've used the venerable <a href="https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml">petstore.yaml</a>:</p>
+
+        <p><code>prism mock petstore.yaml</code></p>
+
+        <p><img src="img/prism-startup.png" alt="prism mocking stdout"></p>
+
+        <p>Now a curl to the endpoint will generate a response that complies with the spec:</p>
+
+        <p><img src="img/prism-curl.png" alt="prism mocking curl result"></p>
+
+        <p>You can see here that the fields generated aren't particularly realistic, though - for example the string fields just take the value "string". If needed, you can improve this by adding <a href="https://swagger.io/docs/specification/adding-examples/">examples</a> to your spec under the response or schema - if they're available then prism will pick from those. This is in general a good idea for improving the clarity of your spec, particularly if you expect it to be widely used, or if you're using it to generate documentation.</p>
+
+        <p>So if I edit petstore.yaml to add an example for the fields for the Pet object:</p>
+
+<pre><code>components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5
+        name:
+          type: string
+          example: Louise
+        tag:
+          type: string
+          example: tag1
+</code></pre>
+
+        <p>Now once prism is restarted, the response will look a little saner:</p>
+
+        <p><img src="img/prism-curl-examples.png" alt="prism mocking curl result"></p>
+    </article>
+</div>
+</body>
+</html>
