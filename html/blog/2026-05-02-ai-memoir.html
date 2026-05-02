@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="blog.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon-96x96.png">
+    <title>AI in early 2026 &mdash; Christopher Turner</title>
+</head>
+<body>
+<div class="container">
+    <p class="site-nav"><a href="./">&larr; Blog</a></p>
+
+    <article>
+        <h1>AI in early 2026</h1>
+        <p class="post-meta">2026-05-02 &middot; Chris</p>
+
+        <p>The way I do my job has been changing very quickly in the last year or so. In a conversation a few days ago, I remarked that I probably won't remember the details of this time well, a few years from now.</p>
+
+        <p>So it seems worthwhile to describe it a little, if only for posterity. I expect most engineers are experiencing something like this, though most are probably more conservative (and some further ahead than me).</p>
+
+        <p>Thinking back to about a year ago, in May 2025, the extent of my AI usage was a combination of GitHub Copilot and ChatGPT. I'd been using both for several years at that point. The tab completion model of Copilot was very powerful, a useful speedup that acknowledged the limitations of the models of the time - even small snippets could be wrong, and were easily ignored or improved by supplying more context. I was a huge fan and spent quite some effort getting my employer at the time to purchase it for all the engineers. I suppose over the years I used it, it improved a little, but I never found the newer features like chatting or code reviewing particularly useful.</p>
+
+        <p>ChatGPT was obviously very helpful, though the limitations of needing to copy and paste back and forth between an IDE and a webpage made it clunky. Still, it was great for writing one-off scripts or fixing the kinds of esoteric build issues which would have once taken quite a lot of time.</p>
+
+        <p>So by May I'd been using these tools for a year and was pretty happy. Around this time Cursor, billed as an AI-native IDE, was becoming quite popular. I tried it a few times, but swapping IDE is a big hassle, and one without enough payoff to justify it - I felt a bit guilty about that, given how popular it was becoming.</p>
+
+        <p>But around this time I started experimenting with Claude Code, and this was just a huge upgrade. The CLI based workflows meant I didn't have to give up my preferred IDE, and I was still much too fussy about my code to push stuff without manual tweaks. So from May 2025 I was using Claude heavily, but pretty much everything I'd do would have a lot of my own changes on top.</p>
+
+        <p>The next step was in November 2025, when Opus 4.5 became available. This was when the capabilities of the model hit a point where it became my default first port of call for pretty much any task - I recall making a post in my work slack in late November specifically extolling its virtues.</p>
+
+        <p>The final change so far has been the move over to Conductor. I mentioned above that I loved Claude Code because it let me keep my old IDE, but by the time of Opus 4.6 and 4.7 I found that I didn't need it for 80% of changes - I'd specify a change, and first read the code as a PR, and generally make changes through chat rather than manually. I think part of this was improvements in the models and getting the right memory and customization settings to handle my tastes, but a lot was simply me becoming less fussy. As I've worked with agents more I start to see the minor details of code style as less important.</p>
+
+        <p>And this is where Conductor fits in - as a kind of control center for managing lots of changes at once, it lets me dip into my IDE when I need to, but otherwise focus on managing agents working on many things in parallel.</p>
+
+        <p>So as of May 2026 Conductor is where I spend my day-to-day doing engineering, occasionally opening IntelliJ for a worktree for things where I think the code style is important or there's something I don't understand. But it seems very likely this isn't the final shape software engineering will take, and I'm very curious to see what'll happen next!</p>
+    </article>
+</div>
+</body>
+</html>
